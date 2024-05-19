@@ -4,7 +4,7 @@ pipeline {
         stage ('SCM checkout') {
             steps {
                 script{
-                     git credentialsId: 'git-cred', url: 'https://github.com/naresh26git/helm-node.git'
+                     git credentialsId: 'git-cred', url: 'https://github.com/Yuvaraj9607/helm-node.git'
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
         stage('Docker Build Images') {
             steps {
                 script {
-                    sh 'docker build -t naresh2603/helm-rocket:v1 .'
+                    sh 'docker build -t rockapp/helm-rocket:v1 .'
                     sh 'docker images'
                 }
             }
@@ -37,9 +37,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
-                        sh "docker login -u naresh2603 -p ${dockerPassword}"
-                        sh 'docker push naresh2603/helm-rocket:v1'
-                        sh 'trivy image naresh2603/helm-rocket:v1 > scan.txt'
+                        sh "docker login -u rockapp -p ${dockerPassword}"
+                        sh 'docker push rockapp/helm-rocket:v1'
+                        sh 'trivy image rockapp/helm-rocket:v1 > scan.txt'
                     }
                 }
             }
